@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public GameObject Menu;
     public GameObject VolumeSetting;
+    public GameObject Info;
+    public GameObject Inventory;
 
     public void OnMenuOpen()
     {
@@ -21,6 +23,28 @@ public class UIManager : MonoBehaviour
         Menu.SetActive(false);
     }
 
+    public void OnInfoOpen()
+    {
+        Menu.SetActive(false);
+        Info.SetActive(true);
+    }
+
+    public void OnInfoClose()
+    {
+        Info.SetActive(false);
+        Menu.SetActive(true);
+    }
+
+    public void OnInvenOpen()
+    {
+        Menu.SetActive(false);
+        Inventory.SetActive(true);
+    }
+    public void OnInvenClose()
+    {
+        Inventory.SetActive(false);
+        Menu.SetActive(true);
+    }
     public void OnVolumeSettingOpen()
     {
         if(!Menu.activeSelf && !VolumeSetting.activeSelf)
@@ -28,6 +52,7 @@ public class UIManager : MonoBehaviour
             VolumeSetting.SetActive(true);
         }
     }
+
     public void OnVolumeSubmit()
     {
         PlayerPrefs.SetFloat("MasterVolume", GameManager.Instance.MasterVolume);
