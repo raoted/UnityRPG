@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     CharacterController cc;
     public PlayerState state = PlayerState.Idle;
 
+    
+
     #region "Move일 때 사용할 변수"
     #endregion
     float moveX = 0.0f;

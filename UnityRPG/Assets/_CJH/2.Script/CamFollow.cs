@@ -25,8 +25,8 @@ public class CamFollow : MonoBehaviour
     private float y = 0.0f;
 
     //조이스틱의 값
-    private float joyX = 0.0f;
-    private float joyY = 0.0f;
+    private float mouseX = 0.0f;
+    private float mouseY = 0.0f;
 
     //카메라 회전 속도
     private float xSpeed = 220.0f;
@@ -63,8 +63,7 @@ public class CamFollow : MonoBehaviour
     {
         if (target)
         {
-            if(GameManager.Instance.MobileMode) { MobileCam(); }
-            else { PcCam(); }
+            PcCam();
 
             
             if (dist < 0.5f) { dist = 0.5f; }
@@ -80,38 +79,14 @@ public class CamFollow : MonoBehaviour
         }
     }
 
-    private void MobileCam()
-    {
-        //조이스틱 값 획득
-        joyX = joystick.joyStickPosX;
-        joyY = joystick.joyStickPosY;
-
-        if (joyX >= 0.5f || joyX <= -0.5f) { x += joyX * xSpeed * Time.deltaTime; }
-        if (joyY >= 0.5f || joyY <= -0.5f) { y -= joyY * ySpeed * Time.deltaTime; }
-
-        //CheckTouch();
-    }
-
-    private void CheckTouch()
-    {
-        int touchCount = Input.touchCount;
-
-        if (touchCount == 2 && 
-            (Input.touches[0].phase == TouchPhase.Moved || 
-            Input.touches[1].phase == TouchPhase.Moved))
-        {
-            dist -= 0.5f * Vector2.Distance(Input.touches[0].position, Input.touches[1].position);
-        }
-    }
-
     private void PcCam()
     {
         //조이스틱 값 획득
-        joyX = Input.GetAxis("Mouse X");
-        joyY = Input.GetAxis("Mouse Y");
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
 
-        if (joyX >= 0.5f || joyX <= -0.5f) { x += joyX * xSpeed * Time.deltaTime; }
-        if (joyY >= 0.5f || joyY <= -0.5f) { y -= joyY * ySpeed * Time.deltaTime; }
+        if (mouseX >= 0.5f || mouseX <= -0.5f) { x += mouseX * xSpeed * Time.deltaTime; }
+        if (mouseY >= 0.5f || mouseY <= -0.5f) { y -= mouseY * ySpeed * Time.deltaTime; }
 
     }
 }
