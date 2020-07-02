@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security;
 using UnityEngine;
 //using UnityEngine.Scripting.APIUpdating;
 
@@ -14,7 +12,7 @@ public class Player : MonoBehaviour
         Idle,
         Move,
         Run,
-        Attack,
+        Spell,
         Damaged,
         Die
     }
@@ -22,6 +20,7 @@ public class Player : MonoBehaviour
     public UIJoystick joystick;
     Animator anim;
     CharacterController cc;
+    public int skillID = 0;
     public PlayerState state = PlayerState.Idle;
 
     
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour
             case PlayerState.Run:
                 Run();
                 break;
-            case PlayerState.Attack:
+            case PlayerState.Spell:
                 Attack();
                 break;
             case PlayerState.Damaged:

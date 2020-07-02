@@ -5,26 +5,46 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
+    public NewUI_SpellDatabase spellData;
     #region"스테이터스"
-    private int hp = 1; //생명력
-    public int HP
-    {
-        get { return hp; }
-    }
+
     private int maxHp = 1;      //최대 생명력
     public int MaxHP
     {
         get { return maxHp; }
     }
-    private int mp = 1;         //마력
-    public int MP
+
+    private int hp = 1; //생명력
+    public int HP
     {
-        get { return mp; }
+        get { return hp; }
     }
+    public int Damaged
+    {
+        set 
+        {
+            if(value > hp) { hp = 0; }
+            else { hp -= value; }
+        }
+    }
+    public int Heal
+    {
+        set
+        {
+            hp += value;
+            if(hp > MaxHP) { hp = MaxHP; }
+        }
+    }
+
     private int maxMp = 1;      //최대 마력
     public int MaxMP
     {
         get { return maxMp; }
+    }
+    private int mp = 1;         //마력
+    public int MP
+    {
+        get { return mp; }
     }
     private int exp = 1;        //경험치
     public int EXP
@@ -127,5 +147,20 @@ public class PlayerStatus : MonoBehaviour
     public void LevelUp()
     {
 
+    }
+
+    public void UseMP(int i)
+    {
+        int cost;
+        if (spellData.GetByID(i) != null)
+        {
+            cost = (int)spellData.GetByID(i).PowerCost;
+
+            if (cost <= MP)
+            {
+                this.mp -= cost;
+                transform.GetComponent<Player>().skillID = i;
+            }
+        }
     }
 }

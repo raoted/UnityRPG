@@ -28,7 +28,7 @@ public class PlayerAnimation : MonoBehaviour
             case Player.PlayerState.Run:
                 RunAnimation();
                 break;
-            case Player.PlayerState.Attack:
+            case Player.PlayerState.Spell:
                 AttackAnimation();
                 break;
             case Player.PlayerState.Damaged:

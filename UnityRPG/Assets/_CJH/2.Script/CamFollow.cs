@@ -17,9 +17,6 @@ public class CamFollow : MonoBehaviour
     //카메라와 타겟의 거리
     public float dist = 2.5f;
 
-    //모바일 환경일 경우 사용할 조이스틱
-    public UIJoystick joystick;
-
     //카메라 초기 위치
     private float x = 0.0f;
     private float y = 0.0f;
@@ -81,12 +78,17 @@ public class CamFollow : MonoBehaviour
 
     private void PcCam()
     {
-        //조이스틱 값 획득
+        //마우스 값 획득
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
 
-        if (mouseX >= 0.5f || mouseX <= -0.5f) { x += mouseX * xSpeed * Time.deltaTime; }
-        if (mouseY >= 0.5f || mouseY <= -0.5f) { y -= mouseY * ySpeed * Time.deltaTime; }
-
+        if (mouseX >= 0.1f || mouseX <= -0.1f) 
+        {
+            x += mouseX * xSpeed * Time.deltaTime * TimeManager.instance.timeScale; 
+        }
+        if (mouseY >= 0.5f || mouseY <= -0.5f) 
+        {
+            y -= mouseY * ySpeed * Time.deltaTime * TimeManager.instance.timeScale; 
+        }
     }
 }

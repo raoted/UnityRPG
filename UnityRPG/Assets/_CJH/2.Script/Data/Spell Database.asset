@@ -13,73 +13,82 @@ MonoBehaviour:
   m_Name: Spell Database
   m_EditorClassIdentifier: 
   spells:
-  - ID: 1
-    Name: Soul Bolt
-    Icon: {fileID: 2800000, guid: 67515ac0be98c433ab68511893ed691c, type: 3}
-    Description: 
-    Range: 10
-    Cooldown: 8
-    CastTime: 0
-    PowerCost: 0
-    Flags: 2
-  - ID: 1
+  - ID: 0
     Name: 
-    Icon: {fileID: 2800000, guid: c0c6d4ce2b0cc4235b9843239f36b43c, type: 3}
+    Icon: {fileID: 0}
     Description: 
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
+  - ID: 1
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: c0c6d4ce2b0cc4235b9843239f36b43c, type: 3}
+    Description: Dummy Skill
+    Range: 0
+    Cooldown: 15
+    CastTime: 0
+    PowerCost: 0
+    Flags: 0
   - ID: 2
-    Name: 
-    Icon: {fileID: 2800000, guid: 7007c9e4e3d564b96ac7c37a7abb0d1e, type: 3}
-    Description: 
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: d5296165293464ced810b2a0f37652bf, type: 3}
+    Description: dummy Skill
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
   - ID: 3
-    Name: 
-    Icon: {fileID: 2800000, guid: dc62291597eb5450cafef4edfdc0cd5b, type: 3}
-    Description: 
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: 67515ac0be98c433ab68511893ed691c, type: 3}
+    Description: dummySkill
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
   - ID: 4
-    Name: 
-    Icon: {fileID: 2800000, guid: b16aa6eb8e3f34ff692b2a9457b64a83, type: 3}
-    Description: 
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: 69ae417f033e1451d9be69cf75595468, type: 3}
+    Description: dummy skill
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
   - ID: 5
-    Name: 
-    Icon: {fileID: 2800000, guid: f21c7e6e23b244838b231ad9e8bc04f1, type: 3}
-    Description: 
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: 4484b0ca52c204666880f28168cd7f19, type: 3}
+    Description: dummy skill
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
   - ID: 6
-    Name: 
-    Icon: {fileID: 2800000, guid: b2205e1d8b15643e4b65c9b53719ea4c, type: 3}
-    Description: 
+    Name: dummy
+    Icon: {fileID: 2800000, guid: 8bae45167d6bf4bf294ceb90e526728b, type: 3}
+    Description: Dummy Skill
     Range: 0
     Cooldown: 0
     CastTime: 0
     PowerCost: 0
     Flags: 0
   - ID: 7
-    Name: 
-    Icon: {fileID: 2800000, guid: 16551bcaca1274274b757231f120eb4d, type: 3}
-    Description: 
+    Name: Dummy
+    Icon: {fileID: 2800000, guid: f21c7e6e23b244838b231ad9e8bc04f1, type: 3}
+    Description: dummy skill
+    Range: 0
+    Cooldown: 0
+    CastTime: 0
+    PowerCost: 0
+    Flags: 0
+  - ID: 8
+    Name: 'Dummy '
+    Icon: {fileID: 2800000, guid: 3bd57f8a1be094c94a70b712e7552367, type: 3}
+    Description: dummy skill
     Range: 0
     Cooldown: 0
     CastTime: 0
