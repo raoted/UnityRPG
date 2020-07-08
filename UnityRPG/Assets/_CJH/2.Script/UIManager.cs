@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
             for (int i = 1; i < spellDatabase.spells.Length; i++)
             {
                 GameObject spellRow = NGUITools.AddChild(table, spellFactory);
-                spellRow.transform.GetChild(4).GetComponent<RnMUI_Assign_SpellSlot>().assignSpell = i;
+                spellRow.transform.GetChild(4).GetComponent<RnMUI_Assign_SpellSlot>().assignSpell = spellDatabase.Get(i).ID;
                 spellRow.GetComponent<UIWidget>().depth = table.GetComponent<UIWidget>().depth + 1;
             }
         }

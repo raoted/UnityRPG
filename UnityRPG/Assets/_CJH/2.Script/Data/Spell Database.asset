@@ -22,16 +22,16 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 1
+  - ID: 2111
     Name: Dummy
     Icon: {fileID: 2800000, guid: c0c6d4ce2b0cc4235b9843239f36b43c, type: 3}
     Description: Dummy Skill
     Range: 0
     Cooldown: 15
-    CastTime: 0
+    CastTime: 5
     PowerCost: 0
     Flags: 0
-  - ID: 2
+  - ID: 1112
     Name: Dummy
     Icon: {fileID: 2800000, guid: d5296165293464ced810b2a0f37652bf, type: 3}
     Description: dummy Skill
@@ -40,16 +40,16 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 3
+  - ID: 1113
     Name: Dummy
     Icon: {fileID: 2800000, guid: 67515ac0be98c433ab68511893ed691c, type: 3}
     Description: dummySkill
     Range: 0
-    Cooldown: 0
-    CastTime: 0
-    PowerCost: 0
+    Cooldown: 3
+    CastTime: 4
+    PowerCost: 5
     Flags: 0
-  - ID: 4
+  - ID: 1114
     Name: Dummy
     Icon: {fileID: 2800000, guid: 69ae417f033e1451d9be69cf75595468, type: 3}
     Description: dummy skill
@@ -58,7 +58,7 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 5
+  - ID: 1115
     Name: Dummy
     Icon: {fileID: 2800000, guid: 4484b0ca52c204666880f28168cd7f19, type: 3}
     Description: dummy skill
@@ -67,7 +67,7 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 6
+  - ID: 1116
     Name: dummy
     Icon: {fileID: 2800000, guid: 8bae45167d6bf4bf294ceb90e526728b, type: 3}
     Description: Dummy Skill
@@ -76,7 +76,7 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 7
+  - ID: 1117
     Name: Dummy
     Icon: {fileID: 2800000, guid: f21c7e6e23b244838b231ad9e8bc04f1, type: 3}
     Description: dummy skill
@@ -85,7 +85,7 @@ MonoBehaviour:
     CastTime: 0
     PowerCost: 0
     Flags: 0
-  - ID: 8
+  - ID: 1118
     Name: 'Dummy '
     Icon: {fileID: 2800000, guid: 3bd57f8a1be094c94a70b712e7552367, type: 3}
     Description: dummy skill

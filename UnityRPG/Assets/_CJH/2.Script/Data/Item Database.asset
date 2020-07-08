@@ -12,4 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e27f24245c6cff409262e2cbb685467, type: 3}
   m_Name: Item Database
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - ID: 0
+    Name: 
+    Icon: {fileID: 0}
+    Description: 
+    EquipType: 0
+    ItemType: 0
+    Type: 
+    Subtype: 
+    Damage: 0
+    AttackSpeed: 0
+    Block: 0
+    Armor: 0
+    Stamina: 0
+    Strength: 0
+  - ID: 0
+    Name: 
+    Icon: {fileID: 0}
+    Description: 
+    EquipType: 0
+    ItemType: 0
+    Type: 
+    Subtype: 
+    Damage: 0
+    AttackSpeed: 0
+    Block: 0
+    Armor: 0
+    Stamina: 0
+    Strength: 0

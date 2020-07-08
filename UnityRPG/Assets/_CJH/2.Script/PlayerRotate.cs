@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerRotate : MonoBehaviour
 {
     float angleX;
+    public float speed = 150;
     // Update is called once per frame
     void Update()
     {
-        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y, 0);
+        float h = Input.GetAxis("Mouse X");
+        angleX += h * speed * Time.deltaTime;
+        transform.eulerAngles = new Vector3(0, angleX, 0);
     }
 }

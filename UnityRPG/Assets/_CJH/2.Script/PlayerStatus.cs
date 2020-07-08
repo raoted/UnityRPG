@@ -8,18 +8,18 @@ public class PlayerStatus : MonoBehaviour
     public NewUI_SpellDatabase spellData;
     #region"스테이터스"
 
-    private int maxHp = 1;      //최대 생명력
-    public int MaxHP
+    private float maxHp = 1;      //최대 생명력
+    public float MaxHP
     {
         get { return maxHp; }
     }
 
-    private int hp = 1; //생명력
-    public int HP
+    private float hp = 1; //생명력
+    public float HP
     {
         get { return hp; }
     }
-    public int Damaged
+    public float Damaged
     {
         set 
         {
@@ -27,7 +27,7 @@ public class PlayerStatus : MonoBehaviour
             else { hp -= value; }
         }
     }
-    public int Heal
+    public float Heal
     {
         set
         {
@@ -36,18 +36,18 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
-    private int maxMp = 1;      //최대 마력
-    public int MaxMP
+    private float maxMp = 50;      //최대 마력
+    public float MaxMP
     {
         get { return maxMp; }
     }
-    private int mp = 1;         //마력
-    public int MP
+    private float mp = 50;         //마력
+    public float MP
     {
         get { return mp; }
     }
-    private int exp = 1;        //경험치
-    public int EXP
+    private float exp = 1;        //경험치
+    public float EXP
     {
         get { return exp; }
     }
@@ -55,8 +55,8 @@ public class PlayerStatus : MonoBehaviour
     {
         set { exp += value; }
     }
-    private int maxExp = 100;     //최대 경험치
-    public int MaxEXP
+    private float maxExp = 100;     //최대 경험치
+    public float MaxEXP
     {
         get { return maxExp; }
     }
@@ -149,18 +149,16 @@ public class PlayerStatus : MonoBehaviour
 
     }
 
-    public void UseMP(int i)
+    public bool UseMP(float cost)
     {
-        int cost;
-        if (spellData.GetByID(i) != null)
+        if (cost <= MP)
         {
-            cost = (int)spellData.GetByID(i).PowerCost;
-
-            if (cost <= MP)
-            {
-                this.mp -= cost;
-                transform.GetComponent<Player>().skillID = i;
-            }
+            mp -= cost;
+            return true;
         }
+        else
+        {
+            return false;
+        } 
     }
 }
