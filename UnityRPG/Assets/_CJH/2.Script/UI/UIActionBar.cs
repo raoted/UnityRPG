@@ -27,7 +27,8 @@ public class UIActionBar : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && spellSlot[0].GetSpellInfo() != null)
         {
-            if (player.GetComponent<Player>().state == Player.PlayerState.Idle
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                || player.GetComponent<Player>().pState == Player.PlayerState.Move)
                 && player.GetComponent<PlayerStatus>().UseMP(spellSlot[0].GetSpellInfo().PowerCost))
             {
                 player.GetComponent<Player>().GetSkill(spellSlot[0].GetSpellInfo().ID, spellSlot[0].GetSpellInfo().CastTime);
@@ -36,23 +37,53 @@ public class UIActionBar : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && spellSlot[1].GetSpellInfo() != null)
         {
-            playerStatus.UseMP(spellSlot[1].GetSpellInfo().ID);
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                            || player.GetComponent<Player>().pState == Player.PlayerState.Move)
+                            && player.GetComponent<PlayerStatus>().UseMP(spellSlot[1].GetSpellInfo().PowerCost))
+            {
+                player.GetComponent<Player>().GetSkill(spellSlot[1].GetSpellInfo().ID, spellSlot[1].GetSpellInfo().CastTime);
+                spellSlot[1].OnClick();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3) && spellSlot[2].GetSpellInfo() != null)
         {
-            playerStatus.UseMP(spellSlot[2].GetSpellInfo().ID);
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                || player.GetComponent<Player>().pState == Player.PlayerState.Move)
+                && player.GetComponent<PlayerStatus>().UseMP(spellSlot[2].GetSpellInfo().PowerCost))
+            {
+                player.GetComponent<Player>().GetSkill(spellSlot[2].GetSpellInfo().ID, spellSlot[2].GetSpellInfo().CastTime);
+                spellSlot[2].OnClick();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4) && spellSlot[3].GetSpellInfo() != null)
         {
-            playerStatus.UseMP(spellSlot[3].GetSpellInfo().ID);
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                || player.GetComponent<Player>().pState == Player.PlayerState.Move)
+                && player.GetComponent<PlayerStatus>().UseMP(spellSlot[3].GetSpellInfo().PowerCost))
+            {
+                player.GetComponent<Player>().GetSkill(spellSlot[3].GetSpellInfo().ID, spellSlot[3].GetSpellInfo().CastTime);
+                spellSlot[3].OnClick();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5) && spellSlot[4].GetSpellInfo() != null)
         {
-            playerStatus.UseMP(spellSlot[4].GetSpellInfo().ID);
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                || player.GetComponent<Player>().pState == Player.PlayerState.Move)
+                && player.GetComponent<PlayerStatus>().UseMP(spellSlot[4].GetSpellInfo().PowerCost))
+            {
+                player.GetComponent<Player>().GetSkill(spellSlot[4].GetSpellInfo().ID, spellSlot[4].GetSpellInfo().CastTime);
+                spellSlot[4].OnClick();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6) && spellSlot[5].GetSpellInfo() != null)
         {
-            playerStatus.UseMP(spellSlot[5].GetSpellInfo().ID);
+            if ((player.GetComponent<Player>().pState == Player.PlayerState.Idle
+                || player.GetComponent<Player>().pState == Player.PlayerState.Move)
+                && player.GetComponent<PlayerStatus>().UseMP(spellSlot[5].GetSpellInfo().PowerCost))
+            {
+                player.GetComponent<Player>().GetSkill(spellSlot[5].GetSpellInfo().ID, spellSlot[5].GetSpellInfo().CastTime);
+                spellSlot[5].OnClick();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7) && spellSlot[6].GetSpellInfo() != null)
         {

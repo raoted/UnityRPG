@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //using UnityEngine.Scripting.APIUpdating;
 
 
@@ -17,6 +16,12 @@ public class Player : MonoBehaviour
         Damaged,
         Die
     }
+    private PlayerState state = PlayerState.Idle;
+    public PlayerState pState
+    {
+        get { return state; }
+        set { state = value; }
+    }
 
     private bool isBattle;
     public bool IsBattle
@@ -26,13 +31,11 @@ public class Player : MonoBehaviour
 
     Animator anim;
     CharacterController cc;
-    public PlayerState state = PlayerState.Idle;
 
-    public GameObject firePoint;
-    public GameObject[] magics;
     private int skillID;
     private int castedSkill;
     private float castTime = 0;
+    private float attackTime = 0;
     //0일 경우 : buff, 1일 경우 : Active, 2일 경우 : Passive
     [SerializeField] private int skillType;
     //마법 시전시간이 필요한가?
@@ -67,7 +70,10 @@ public class Player : MonoBehaviour
     {
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
-
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
         switch (state)
         {
             case PlayerState.Idle:
@@ -81,9 +87,6 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.Casting:
                 StartCoroutine(Casting());
-                break;
-            case PlayerState.CastEnd:
-                CastEnd();
                 break;
             case PlayerState.Damaged:
                 Damaged();
@@ -164,28 +167,65 @@ public class Player : MonoBehaviour
 
     IEnumerator Casting()
     {
+        Debug.Log(castTime);
         yield return new WaitForSeconds(castTime);
         state = PlayerState.CastEnd;
         anim.SetTrigger("Attack");
-        StartCoroutine(Casting());
+
+        if (skillID % 1000 == 3) { castedSkill = 0; }
+
+        switch (castedSkill)
+        {
+            case 0:
+            case 1:
+                attackTime = 80f / 60f;
+                break;
+            case 2:
+                attackTime = 65f / 60f;
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                attackTime = 70f / 60f;
+                break;
+        }
+        StartCoroutine(CastEnd());
+        StopCoroutine(Casting());
     }
 
     IEnumerator CastEnd()
     {
-        if (skillID % 1000 == 3) { castedSkill = 0; }
-        magics[castedSkill].transform.position = firePoint.transform.position;
-        magics[castedSkill].transform.rotation = firePoint.transform.rotation;
-        magics[castedSkill].SetActive(true); state = PlayerState.Idle;
+        yield return new WaitForSeconds(attackTime);
+
+        state = PlayerState.Idle;
         anim.SetTrigger("Idle");
     }
-    private void CastEnd()
+
+    public IEnumerator Attack(int i)
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        anim.SetTrigger("Attack");
+        anim.SetInteger("numCasting", i);
+        switch (i)
         {
-            
-            Debug.Log(magics[castedSkill].activeSelf);
-            
+            case 0:
+            case 1:
+                attackTime = 80f / 60f;
+                break;
+            case 2:
+                attackTime = 65f / 60f;
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                attackTime = 70f / 60f;
+                break;
         }
+        yield return new WaitForSeconds(attackTime);
+        state = PlayerState.Idle;
+        anim.ResetTrigger("Attack");
+        anim.SetTrigger("Idle");
     }
 
     private void Damaged()

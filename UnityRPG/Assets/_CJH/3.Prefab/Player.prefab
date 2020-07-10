@@ -3055,7 +3055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dca6b9b7705f7b14cb3aac2e7a157439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 100
 --- !u!114 &6202704574362098004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3068,10 +3068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1d1a66e6b2319429653ee6c67c54b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  firePoint: {fileID: 816971175446652048}
-  magics:
-  - {fileID: 2492871845735697698, guid: 762d404c622aaf14f8347fb035eaf9a6, type: 3}
   skillType: 0
   isCasting: 0
   numCasting: 0

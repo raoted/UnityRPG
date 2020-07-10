@@ -5,9 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     //Sound Volume 관리
     private static float Master_Volume;
+
+
+    //BossInterface 보여주기
+    public bool bossInfo = false;
+
     public float MasterVolume
     {
         get { return Master_Volume; }

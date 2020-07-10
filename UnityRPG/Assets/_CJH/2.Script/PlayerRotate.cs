@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerRotate : MonoBehaviour
 {
     float angleX;
-    public float speed = 150;
+    public float speed = 100;
     // Update is called once per frame
     void Update()
     {

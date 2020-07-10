@@ -27,7 +27,6 @@ public class EnemyFSM : EnemyStatus
 
     #region "Attack에 사용할 변수"
     #endregion
-    private float attTime = 2.0f;
     private float timer = 0.0f;
 
 

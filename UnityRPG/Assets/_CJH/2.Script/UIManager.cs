@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject spellFactory;
     public NewUI_SpellDatabase spellDatabase;
     public GameObject table;
+    public GameObject bossUI;
 
     void Start()
     {
@@ -50,6 +52,11 @@ public class UIManager : MonoBehaviour
                 TimeManager.instance.timeScale = 0;
             }
         }
+    }
+
+    public void BossUIEnable(bool b)
+    {
+        bossUI.SetActive(true);
     }
     
     bool AllWindowFalse()

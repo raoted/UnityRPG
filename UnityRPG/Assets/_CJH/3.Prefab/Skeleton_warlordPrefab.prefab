@@ -1337,9 +1337,9 @@ MonoBehaviour:
   damage: 1
   attackPattern: 6
   weapon: {fileID: 1757774847825194480}
-  sightAngle: 60
-  sightDist: 5
-  chaseDist: 3
+  sightAngle: 360
+  sightDist: 30
+  chaseDist: 30
 --- !u!195 &8689632119490290943
 NavMeshAgent:
   m_ObjectHideFlags: 0
