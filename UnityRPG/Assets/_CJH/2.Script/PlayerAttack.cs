@@ -1,15 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
-using UnityScript.Scripting.Pipeline;
 
 public class PlayerAttack : MonoBehaviour
 {
     Player player;
     public GameObject baseFactory;
-    [SerializeField]Queue<GameObject> baseAttack = new Queue<GameObject>();
-    int baseCount = 10;
+    [SerializeField]List<GameObject> baseAttack = new List<GameObject>();
+    int baseCount = 20;
     [SerializeField]GameObject[] attackPoint;
     int attackCount;
 
@@ -26,35 +24,31 @@ public class PlayerAttack : MonoBehaviour
         for(int i = 0; i < baseCount; i++)
         {
             GameObject bullet = Instantiate(baseFactory);
-            baseAttack.Enqueue(bullet);
+            baseAttack.Add(bullet);
         }
     }
 
     private void Update()
     {
-        if(player.pState == Player.PlayerState.Idle || player.pState == Player.PlayerState.Move)
+        if(player.pState == Player.PlayerState.Idle)
         {
-            if (Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(0))
             {
-                player.pState = Player.PlayerState.CastEnd;
-                player.StartCoroutine(player.Attack(Random.Range(1, 6)));
-                BaseAttack();
+                foreach(GameObject bullet in baseAttack)
+                {
+                    if(!bullet.activeSelf)
+                    {
+                        StartCoroutine(player.Attack(Random.Range(0, 2)));
+
+                        int idx = Random.Range(0, attackPoint.Length - 1);
+
+                        bullet.transform.position = attackPoint[idx].transform.position;
+                        bullet.transform.rotation = attackPoint[idx].transform.rotation;
+                        bullet.SetActive(true);
+                        break;
+                    }
+                }
             }
         }
-    }
-    // Update is called once per frame
-    public void BaseAttack()
-    {
-        if(baseAttack.Count == 0)
-        {
-            baseAttack.Enqueue(baseFactory);
-            baseCount++;
-        }
-        GameObject fire = Instantiate(baseFactory);
-        attackCount = Random.Range(0, attackPoint.Length - 1);
-        
-        fire.transform.position = attackPoint[attackCount].transform.position;
-        fire.transform.rotation = attackPoint[attackCount].transform.rotation;
-        fire.SetActive(true);
     }
 }

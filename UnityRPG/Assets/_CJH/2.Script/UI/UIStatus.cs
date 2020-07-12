@@ -21,7 +21,7 @@ public class UIStatus : MonoBehaviour
         label[2].text = player.Agility.ToString();
         label[3].text = player.Stamina.ToString();
         label[4].text = player.Block.ToString();
-        label[5].text = player.Regeneration.ToString();
+        label[5].text = player.RegeneHP.ToString();
         label[6].text = player.AttackSpeed.ToString();
         label[7].text = player.CastSpeed.ToString();
         label[8].text = player.Armor.ToString();

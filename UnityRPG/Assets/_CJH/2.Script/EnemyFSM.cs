@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,8 +36,8 @@ public class EnemyFSM : EnemyStatus
     //추적 거리
     [SerializeField] float chaseDist = 0.0f;
     LayerMask targetLayer = 0;
-    // Start is called before the first frame update
-    void Start()
+    
+    private void OnEnable()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
@@ -65,7 +64,7 @@ public class EnemyFSM : EnemyStatus
                 Return();
                 break;
             case EnemyState.Damaged:
-                Damaged();
+                //Damaged();
                 break;
             case EnemyState.Die:
                 Die();
@@ -86,7 +85,7 @@ public class EnemyFSM : EnemyStatus
 
     private void Move()
     {
-        if(Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance)
+        if (Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance)
         {
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
@@ -96,7 +95,7 @@ public class EnemyFSM : EnemyStatus
             Debug.Log("Attack");
             anim.SetTrigger("Attack");
         }
-        else if(Vector3.Distance(transform.position, startPoint) > chaseDist)
+        else if (Vector3.Distance(transform.position, startPoint) > chaseDist)
         {
             state = EnemyState.Return;
             anim.SetTrigger("Return");
@@ -104,7 +103,7 @@ public class EnemyFSM : EnemyStatus
         }
         else
         {
-            agent.SetDestination(target.transform.position);
+            if (agent.pathPending) { agent.SetDestination(target.transform.position); }
         }
     }
 
@@ -112,6 +111,7 @@ public class EnemyFSM : EnemyStatus
     {
         if (Vector3.Distance(target.transform.position, transform.position) <= agent.stoppingDistance)
         {
+            transform.LookAt(target.transform);
             if(anim.GetInteger("numAttack") == 0)
             {
                 timer += Time.deltaTime;
@@ -148,6 +148,7 @@ public class EnemyFSM : EnemyStatus
         if(Sight() && Vector3.Distance(transform.position, startPoint) <= chaseDist)
         {
             state = EnemyState.Move;
+            anim.SetTrigger("Move");
         }
         else if(Vector3.Distance(transform.position, startPoint) == 0.0f)
         {
@@ -157,17 +158,16 @@ public class EnemyFSM : EnemyStatus
         }
     }
 
-    private void Damaged()
+    IEnumerator Damaged()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            anim.SetTrigger("Idle");
-        }
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0).Length);
+        state = EnemyState.Idle;
+        anim.SetTrigger("Idle");
     }
 
     private void Die()
     {
-        
+        StopAllCoroutines();
     }
 
     public bool Sight()
@@ -191,13 +191,19 @@ public class EnemyFSM : EnemyStatus
 
     public void HitDamage(float damage)
     {
-        if(damage >= 0)
+        if(state == EnemyState.Damaged || state == EnemyState.Die) { return; }
+        
+        HP -= damage;
+        
+        if(HP > damage)
         {
             state = EnemyState.Damaged;
             anim.SetTrigger("Damaged");
+            StartCoroutine(Damaged());
         }
         else 
         {
+            HP = 0;
             state = EnemyState.Die;
             anim.SetTrigger("Die");
         }

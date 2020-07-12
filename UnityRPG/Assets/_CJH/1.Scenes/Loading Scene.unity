@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cad48fba03602e468fa1cb1467245ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Demo InGame Scene
+  sceneName: InGameScene
   bar: {fileID: 760157248}
   requiredValue: 1
   ignoreFirst: 1

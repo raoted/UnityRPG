@@ -5,16 +5,20 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
-    public NewUI_SpellDatabase spellData;
     #region"스테이터스"
 
     private float maxHp = 1;      //최대 생명력
     public float MaxHP
     {
         get { return maxHp; }
+        set
+        {
+            maxHp = value;
+            hp = maxHp;
+        }
     }
 
-    private float hp = 1; //생명력
+    private float hp; //생명력
     public float HP
     {
         get { return hp; }
@@ -40,6 +44,11 @@ public class PlayerStatus : MonoBehaviour
     public float MaxMP
     {
         get { return maxMp; }
+        set
+        {
+            maxMp = value;
+            mp = value;
+        }
     }
     private float mp = 50;         //마력
     public float MP
@@ -60,40 +69,45 @@ public class PlayerStatus : MonoBehaviour
     {
         get { return maxExp; }
     }
-    private int strength = 1;   //힘
+    private int strength = 10;   //힘
     public int Strength
     {
         get { return strength; }
     }
-    private int intellect = 1;  //지능
+    private int intellect = 30;  //지능
     public int Intellect
     {
         get { return intellect; }
     }
-    private int agility = 1;    //민첩
+    private int agility = 15;    //민첩
     public int Agility
     {
         get { return agility; }
     }    
-    private int sprite = 1;     //정신
+    private int sprite = 25;     //정신
     public int Sprite
     {
         get { return sprite; }
     }
-    private int stamina = 1;    //스테미나
+    private int stamina = 20;    //스테미나
     public int Stamina
     {
         get { return stamina; }
     }
-    private float block = 1;    //방어확률
+    private float block = 3;    //방어확률
     public float Block
     {
         get { return block; }
     }
-    private float regeneration = 1; //생명력 재생량
-    public float Regeneration
+    private float regeneration = 1; //초당 생명력 재생량
+    public float RegeneHP
     {
         get { return regeneration; }
+    }
+    public float magicAtk = 15;
+    public float MagicAtk
+    {
+        get { return MagicAtk; }
     }
     private float attackSpeed = 1;  //공속
     public float AttackSpeed
@@ -105,27 +119,27 @@ public class PlayerStatus : MonoBehaviour
     {
         get { return castSpeed; }
     }
-    private int armor = 1;          //방어력
+    private int armor = 5;          //방어력
     public int Armor
     {
         get { return armor; }
     }
-    private float critical = 1;     //치명타 확률
+    private float critical = 0;     //치명타 확률
     public float Critical
     {
         get { return critical; }
     }
-    private float penetration = 1;  //관통확률
+    private float penetration = 0;  //관통확률
     public float Penetration
     {
         get { return penetration; }
     }
-    private float criDamage = 1;    //치명타 데미지 비율
+    private float criDamage = 1.2f;    //치명타 데미지 비율
     public float CriDamage
     {
         get { return criDamage; }
     }
-    private float resilience = 1;    //회피확률
+    private float resilience = 10;   //회피확률
     public float Resilience
     {
         get { return resilience; }
@@ -135,13 +149,20 @@ public class PlayerStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        MaxHP = 700;
+        MaxMP = 300;
+        StartCoroutine(Regen());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Regen()
     {
-        
+        while(true)
+        {
+            yield return new WaitForSeconds(1.0f);
+            Heal = RegeneHP;
+            if (mp >= MaxMP) { mp = MaxMP; }
+            else { mp += (Sprite / 5); }
+        }
     }
 
     public void LevelUp()

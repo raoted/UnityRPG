@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-//using UnityEngine.Scripting.APIUpdating;
 
 
 public class Player : MonoBehaviour
@@ -35,7 +33,6 @@ public class Player : MonoBehaviour
     private int skillID;
     private int castedSkill;
     private float castTime = 0;
-    private float attackTime = 0;
     //0일 경우 : buff, 1일 경우 : Active, 2일 경우 : Passive
     [SerializeField] private int skillType;
     //마법 시전시간이 필요한가?
@@ -58,6 +55,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         isBattle = true;
+        castedSkill = 0;
         cc = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         state = PlayerState.Idle;
@@ -70,10 +68,6 @@ public class Player : MonoBehaviour
     {
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
         switch (state)
         {
             case PlayerState.Idle:
@@ -86,10 +80,10 @@ public class Player : MonoBehaviour
                 Run();
                 break;
             case PlayerState.Casting:
-                StartCoroutine(Casting());
+                //StartCoroutine(Casting());
                 break;
             case PlayerState.Damaged:
-                Damaged();
+                //
                 break;
             case PlayerState.Die:
                 Die();
@@ -109,7 +103,6 @@ public class Player : MonoBehaviour
             anim.SetFloat("moveZ", moveZ);
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                anim.SetTrigger("Run");
                 state = PlayerState.Run;
             }
             anim.SetTrigger("Move");
@@ -132,8 +125,7 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 state = PlayerState.Run;
-                anim.ResetTrigger("Move");
-                anim.SetBool("Run", true);
+                return;
             }
 
             float h = moveX * MoveSpeed * Time.deltaTime;
@@ -153,50 +145,41 @@ public class Player : MonoBehaviour
 
         if (moveX == 0.0f && moveZ == 0.0f)
         {
-            anim.ResetTrigger("Run");
             anim.SetTrigger("Idle");
             state = PlayerState.Idle;
+            return;
         }
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             state = PlayerState.Move;
-            anim.SetTrigger("Walk");
+            return;
         }
 
+        float h = moveX * MoveSpeed * Time.deltaTime;
+        float v = moveZ * MoveSpeed * Time.deltaTime;
+
+        Vector3 dir = new Vector3(h, 0, v);
+        dir = Camera.main.transform.TransformDirection(dir);
+        dir.Normalize();
+        cc.SimpleMove(dir * 2);
     }
 
     IEnumerator Casting()
     {
         Debug.Log(castTime);
-        yield return new WaitForSeconds(castTime);
+        if(isCasting) { yield return new WaitForSeconds(castTime); }
+        else { yield return new WaitForSeconds(0); }
+
         state = PlayerState.CastEnd;
         anim.SetTrigger("Attack");
 
         if (skillID % 1000 == 3) { castedSkill = 0; }
-
-        switch (castedSkill)
-        {
-            case 0:
-            case 1:
-                attackTime = 80f / 60f;
-                break;
-            case 2:
-                attackTime = 65f / 60f;
-                break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                attackTime = 70f / 60f;
-                break;
-        }
         StartCoroutine(CastEnd());
-        StopCoroutine(Casting());
     }
 
-    IEnumerator CastEnd()
+    public IEnumerator CastEnd()
     {
-        yield return new WaitForSeconds(attackTime);
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0).Length);
 
         state = PlayerState.Idle;
         anim.SetTrigger("Idle");
@@ -205,35 +188,24 @@ public class Player : MonoBehaviour
     public IEnumerator Attack(int i)
     {
         anim.SetTrigger("Attack");
-        anim.SetInteger("numCasting", i);
-        switch (i)
-        {
-            case 0:
-            case 1:
-                attackTime = 80f / 60f;
-                break;
-            case 2:
-                attackTime = 65f / 60f;
-                break;
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                attackTime = 70f / 60f;
-                break;
-        }
-        yield return new WaitForSeconds(attackTime);
+        anim.SetInteger("numCasting", i+1);
+        state = PlayerState.CastEnd;
+
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         state = PlayerState.Idle;
-        anim.ResetTrigger("Attack");
         anim.SetTrigger("Idle");
     }
 
-    private void Damaged()
+
+    IEnumerator Damaged()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            state = PlayerState.Idle;
-        }
+        anim.SetTrigger("Attack");
+        state = PlayerState.CastEnd;
+
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorClipInfo(0).Length);
+        
+        state = PlayerState.Idle;
+        anim.SetTrigger("Idle");
     }
 
     private void Die()
@@ -279,8 +251,8 @@ public class Player : MonoBehaviour
         if (transform.GetComponent<PlayerStatus>().HP > 0)
         {
             anim.SetTrigger("Damaged");
-            anim.SetInteger("numDamaged", UnityEngine.Random.Range(1, 3));
             state = PlayerState.Damaged;
+            StartCoroutine(Damaged());
         }
         else
         {

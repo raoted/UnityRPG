@@ -6,29 +6,41 @@ public class MagicMove : MonoBehaviour
 {
     public float lifeTime;
     public float flySpeed;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(Disable(lifeTime));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        GetComponent<Rigidbody>().AddForce(transform.forward * flySpeed);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.transform.tag == "Enemy")
-        {
-            other.GetComponent<EnemyFSM>().HitDamage(10);
-        }
-    }
+    public GameObject player;
+    
     IEnumerator Disable(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         gameObject.SetActive(false);
     }
+
+    private void OnEnable()
+    {
+        StartCoroutine(Disable(lifeTime));
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        player = GameObject.Find("Player");
+        transform.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward, ForceMode.Impulse);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.CompareTag("Enemy"))
+        {
+            Debug.Log(other);
+            if (other.transform.name.Contains("Foot"))
+            {
+                other.transform.GetComponent<FootManFSM>().HitDamage(player.GetComponent<PlayerStatus>().magicAtk * 3);
+            }
+            else
+            {
+                other.GetComponent<EnemyFSM>().HitDamage(player.GetComponent<PlayerStatus>().magicAtk*3);
+            }
+            StopCoroutine(Disable(lifeTime));
+            gameObject.SetActive(false);
+        }
+    }
+    
 }

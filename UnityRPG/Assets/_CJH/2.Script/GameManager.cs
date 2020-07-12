@@ -5,41 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    //Sound Volume 관리
-    private static float Master_Volume;
 
-
+    public GameObject SpawnPoint;
+    public GameObject FootMan;
+    public GameObject Boss;
+    public UIManager UI;
     //BossInterface 보여주기
     public bool bossInfo = false;
-
-    public float MasterVolume
-    {
-        get { return Master_Volume; }
-        set { Master_Volume = value; }
-    }
-
-    private static float BGM_Volume;
-    public float BGMVolume
-    {
-        get { return BGM_Volume; }
-        set { BGM_Volume = BGMVolume; }
-    }
-  
-    private static float SE_Volume;
-    public float SEVolume
-    {
-        get { return SE_Volume; }
-        set { SE_Volume = value; }
-    }
-
-    //
-    private bool mobileMode = false;
-    public bool MobileMode
-    {
-        get { return mobileMode; }
-        set { mobileMode = value; }
-    }
-    //
     private bool windowOpen = false;
     public bool WindowOpen
     {
@@ -50,14 +22,20 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        if(PlayerPrefs.HasKey("MasterVolume")) { Master_Volume = PlayerPrefs.GetFloat("MasterVolume"); }
-        else { Master_Volume = 1.0f; }
-        if(PlayerPrefs.HasKey("BGMVolume")) { BGM_Volume = PlayerPrefs.GetFloat("BGMVolume"); }
-        else { BGM_Volume = 1.0f; }
-        if(PlayerPrefs.HasKey("SEVolume")) { SE_Volume = PlayerPrefs.GetFloat("SEVolume"); }
-        else { SE_Volume = 1.0f; }
+        //if(PlayerPrefs.HasKey("MasterVolume")) { Master_Volume = PlayerPrefs.GetFloat("MasterVolume"); }
+        //else { Master_Volume = 1.0f; }
+        //if(PlayerPrefs.HasKey("BGMVolume")) { BGM_Volume = PlayerPrefs.GetFloat("BGMVolume"); }
+        //else { BGM_Volume = 1.0f; }
+        //if(PlayerPrefs.HasKey("SEVolume")) { SE_Volume = PlayerPrefs.GetFloat("SEVolume"); }
+        //else { SE_Volume = 1.0f; }
     }
-
+    private void Start()
+    {
+        //for(int i = 0; i < SpawnPoint.transform.childCount; i++)
+        //{
+        //   Instantiate(FootMan, SpawnPoint.transform.GetChild(i).transform);
+        //}
+    }
     private void Update()
     {
         //캐릭터 정보 & 스테이터스
@@ -86,10 +64,11 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    public void OnChangeDivice()
-    {
-        MobileMode = !MobileMode;
-    }
 
-    
+    public void BossSpawn()
+    {
+        bossInfo = true;
+        Boss.SetActive(true);
+        UI.BossUIEnable(bossInfo);
+    }
 }

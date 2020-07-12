@@ -11,6 +11,15 @@ public abstract class EnemyStatus : MonoBehaviour
     public float damage;
     public int attackPattern;
 
+    public float MaxHP
+    {
+        get { return maxHP; }
+        set 
+        {
+            maxHP = value;
+            SetHP = maxHP;
+        }
+    }
     public float SetHP
     {
         set { hp = maxHP; }

@@ -11,7 +11,7 @@ public class StartSceneManager : MonoBehaviour
     public UILabel inputId;
     public UILabel inputPw;
 
-    bool isLoginSuccess = false;
+    //bool isLoginSuccess = false;
     // Update is called once per frame
     void Update()
     {
@@ -23,7 +23,7 @@ public class StartSceneManager : MonoBehaviour
         Debug.Log("ID : " + inputId.text);
         Debug.Log("PW : " + inputPw.text);
         //이거 서버 구현되면 서버로 전송해야됨
-        isLoginSuccess = true;
+        //isLoginSuccess = true;
         loginWindow.SetActive(false);
         selectCharacter.SetActive(true);
     }

@@ -6,12 +6,14 @@ public class BossInfo : MonoBehaviour
 {
     UILabel bossName;
     UISprite bossHPBar;
-    EnemyFSM bossFSM;
+    public EnemyFSM bossFSM;
 
     // Start is called before the first frame update
     void Start()
     {
-        bossFSM = GameObject.FindWithTag("Boss").GetComponent<EnemyFSM>();
+        bossName = transform.GetChild(0).GetComponent<UILabel>();
+        bossHPBar = transform.GetChild(1).GetComponent<UISprite>();
+         
         bossName.text = bossFSM.transform.gameObject.name;
         bossHPBar.fillAmount = (bossFSM.HP / bossFSM.maxHP);
     }

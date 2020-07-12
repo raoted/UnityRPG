@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class EntireBossRoom : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public GameObject DoorLeft;
+    public GameObject DoorRight;
+    private void OnTriggerExit(Collider other)
     {
-        if(other.transform.tag == "Player")
+        if(!GameManager.Instance.bossInfo && other.transform.tag == "Player")
         {
-            GameManager.Instance.bossInfo = true;
+            iTween.RotateTo(DoorLeft, new Vector3(0, 180, 0), 2);
+            iTween.RotateTo(DoorRight, new Vector3(0, 180, 0), 2);
+            GameManager.Instance.BossSpawn();
         }
     }
 

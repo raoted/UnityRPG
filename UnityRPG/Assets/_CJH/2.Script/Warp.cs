@@ -18,11 +18,11 @@ public class Warp : MonoBehaviour
     {
         if(other.gameObject.transform.tag == "Player")
         {
-            disableMap.SetActive(false);
             enableMap.SetActive(true);
-            other.gameObject.transform.position = point.transform.position;
-            other.gameObject.transform.rotation = point.transform.rotation;
-            Camera.main.transform.rotation = point.transform.rotation;
+            other.transform.position = point.transform.position;
+            disableMap.SetActive(false);
+            //other.transform.rotation = point.transform.rotation;
+            //Camera.main.transform.rotation = point.transform.rotation;
         }
     }
 }

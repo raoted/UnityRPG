@@ -6,8 +6,8 @@ public class UIActionBar : MonoBehaviour
 {
     public GameObject player;
     private PlayerStatus playerStatus;
-    public UISprite leftGloves;
-    public UISprite rightGloves;
+    public GameObject leftGloves;
+    public GameObject rightGloves;
     public UISprite expBar;
     public List<RnMUI_SpellSlot> spellSlot;
 
@@ -110,8 +110,12 @@ public class UIActionBar : MonoBehaviour
             playerStatus.UseMP(spellSlot[11].GetSpellInfo().ID);
         }
 
-        leftGloves.fillAmount = playerStatus.HP / playerStatus.MaxHP;
-        rightGloves.fillAmount = (playerStatus.MP/playerStatus.MaxMP);
+        leftGloves.transform.GetChild(0).GetComponent<UISprite>().fillAmount = playerStatus.HP / playerStatus.MaxHP;
+        leftGloves.transform.GetChild(3).GetComponent<UILabel>().text = playerStatus.HP + "/" + playerStatus.MaxHP;
+
+        rightGloves.transform.GetChild(0).GetComponent<UISprite>().fillAmount = (playerStatus.MP/playerStatus.MaxMP);
+        rightGloves.transform.GetChild(3).GetComponent<UILabel>().text = playerStatus.MP + "/" + playerStatus.MaxMP;
+        
         expBar.fillAmount = playerStatus.EXP / playerStatus.MaxEXP;
     }
 }

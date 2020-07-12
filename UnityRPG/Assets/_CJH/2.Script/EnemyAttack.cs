@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if(trigger.transform.tag == "Player")
         {
-            trigger.gameObject.GetComponent<Player>().Attacked(2);
+            trigger.gameObject.GetComponent<Player>().Attacked(user.damage);
         }
     }
 }
