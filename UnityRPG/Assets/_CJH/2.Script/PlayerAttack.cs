@@ -6,10 +6,10 @@ public class PlayerAttack : MonoBehaviour
 {
     Player player;
     public GameObject baseFactory;
-    [SerializeField]List<GameObject> baseAttack = new List<GameObject>();
-    int baseCount = 20;
+    //[SerializeField]List<GameObject> baseAttack = new List<GameObject>();
+    //int baseCount = 20;
     [SerializeField]GameObject[] attackPoint;
-    int attackCount;
+    //int attackCount;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +21,11 @@ public class PlayerAttack : MonoBehaviour
         {
             attackPoint[i] = transform.GetChild(5).GetChild(i).gameObject;
         }
-        for(int i = 0; i < baseCount; i++)
-        {
-            GameObject bullet = Instantiate(baseFactory);
-            baseAttack.Add(bullet);
-        }
+        //for(int i = 0; i < baseCount; i++)
+        //{
+        //    GameObject bullet = Instantiate(baseFactory);
+        //    baseAttack.Add(bullet);
+        //}
     }
 
     private void Update()
@@ -34,20 +34,12 @@ public class PlayerAttack : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
-                foreach(GameObject bullet in baseAttack)
-                {
-                    if(!bullet.activeSelf)
-                    {
-                        StartCoroutine(player.Attack(Random.Range(0, 2)));
+                StartCoroutine(player.Attack(Random.Range(0, 2)));
 
-                        int idx = Random.Range(0, attackPoint.Length - 1);
+                int idx = Random.Range(0, attackPoint.Length - 1);
 
-                        bullet.transform.position = attackPoint[idx].transform.position;
-                        bullet.transform.rotation = attackPoint[idx].transform.rotation;
-                        bullet.SetActive(true);
-                        break;
-                    }
-                }
+                GameObject bullet = Instantiate(baseFactory, attackPoint[idx].transform);
+                bullet.SetActive(true);
             }
         }
     }

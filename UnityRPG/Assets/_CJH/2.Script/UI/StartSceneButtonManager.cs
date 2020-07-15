@@ -41,8 +41,8 @@ public class StartSceneButtonManager : MonoBehaviour
     }
     public void OnPressExitButton()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         //빌드시에는 아래 문장 활성화 후 빌드
-        //Application.Quit();
+        Application.Quit();
     }
 }

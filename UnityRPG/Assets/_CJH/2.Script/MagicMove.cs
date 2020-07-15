@@ -11,7 +11,7 @@ public class MagicMove : MonoBehaviour
     IEnumerator Disable(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        gameObject.SetActive(false);
+        DestroyImmediate(gameObject);
     }
 
     private void OnEnable()
@@ -39,7 +39,7 @@ public class MagicMove : MonoBehaviour
                 other.GetComponent<EnemyFSM>().HitDamage(player.GetComponent<PlayerStatus>().magicAtk*3);
             }
             StopCoroutine(Disable(lifeTime));
-            gameObject.SetActive(false);
+            DestroyImmediate(gameObject);
         }
     }
     
