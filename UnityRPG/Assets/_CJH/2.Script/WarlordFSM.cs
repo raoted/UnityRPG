@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public class FootManFSM : EnemyFSM
+public class WarlordFSM : EnemyFSM
 {
     EnemyStatus status;
     EnemyState state;
@@ -22,25 +23,25 @@ public class FootManFSM : EnemyFSM
         AttackRange = 2.0f;
 
         status = GetComponent<EnemyStatus>();
-        
-        status.MaxHP = 100;
-        status.Damage = 3;
-        status.MoveSpeed = 10.0f;
-        status.AttackRate = 3.0f;
-        
+
+        status.MaxHP = 500;
+        status.Damage = 35;
+        status.MoveSpeed = 12.0f;
+        status.AttackRate = 2.7f;
+
         player = GameObject.Find("Player").transform;
 
         Weapon = weaponCollider;
         Weapon.enabled = false;
 
         StartPoint = transform;
-        
+
         Agent = GetComponent<NavMeshAgent>();
         Agent.speed = status.MoveSpeed;
-        
+
         Animator = GetComponent<Animator>();
         Animator.SetTrigger("Idle");
-        
+
         state = EnemyState.Idle;
     }
 
@@ -59,7 +60,7 @@ public class FootManFSM : EnemyFSM
                 Attack();
                 break;
             case EnemyState.Return:
-                Return ();
+                Return();
                 break;
             case EnemyState.Damaged:
                 //Damaged();
@@ -80,21 +81,26 @@ public class FootManFSM : EnemyFSM
             Animator.SetTrigger("Move");
         }
     }
-
     public override void Move()
     {
+        transform.LookAt(player);
+        //추적 거리 내에 있을 때
         if(Vector3.Distance(transform.position, StartPoint.position) <= ChaseRange)
         {
-            if (Vector3.Distance(transform.position, player.position) < AttackRange)
+            //플레이어가 공격범위 안에 있다면
+            if(Vector3.Distance(transform.position, player.position) < AttackRange)
             {
+                //NavMeshAgent 정지
                 Agent.isStopped = true;
+                //Agent의 가속도를 0으로 변경
                 Agent.velocity = Vector3.zero;
+                //오브젝트 상태와 애니메이터 상태를 Attack으로 변경
                 state = EnemyState.Attack;
                 Animator.SetTrigger("Attack");
             }
             else
             {
-                if (Agent.destination != player.position)
+                if(Agent.destination != player.position)
                 {
                     Agent.SetDestination(player.position);
                 }
@@ -132,10 +138,10 @@ public class FootManFSM : EnemyFSM
                 Weapon.enabled = true;
 
                 Animator.SetTrigger("Attack");
-                Animator.SetInteger("numAttack", UnityEngine.Random.Range(1, 4));
-                
+                Animator.SetInteger("numAttack", Random.Range(1, 6));
+
                 Timer = 0.0f;
-                
+
                 StartCoroutine(AttackEnd());
             }
             else
@@ -175,36 +181,18 @@ public class FootManFSM : EnemyFSM
     public override bool Sight()
     {
         Vector3 targetDir = (player.position - transform.position).normalized;
+
         float dist = Vector3.Distance(player.position, transform.position);
         float dot = Vector3.Dot(transform.forward, targetDir);
 
         float theta = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        if (theta <= SightAngle && dist <= FindRange) { return true; }
+        if(theta <= SightAngle && dist <= FindRange) { return true; }
         else { return false; }
     }
 
     public override void HitDamage(float damage)
     {
-        if (state == EnemyState.Damaged || state == EnemyState.Die) { return; }
-
-        status.HP -= damage;
-        if (status.HP > damage)
-        {
-            state = EnemyState.Damaged;
-            Animator.SetTrigger("Damaged");
-
-            StartCoroutine(Damaged());
-        }
-        else
-        {
-            status.HP = 0;
-            Agent.enabled = false;
-            transform.GetComponent<CapsuleCollider>().enabled = false;
-            state = EnemyState.Die;
-            Animator.SetTrigger("Die");
-        }
-        Debug.Log(status.HP);
+        if(state == EnemyState.Damaged || state == EnemyState.Die) { return; }
     }
-
 }

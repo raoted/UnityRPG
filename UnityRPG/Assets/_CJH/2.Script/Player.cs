@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     CharacterController cc;
 
     private int skillID;
-    private int castedSkill;
+    //private int castedSkill;
     private float castTime = 0;
     //0일 경우 : buff, 1일 경우 : Active, 2일 경우 : Passive
     [SerializeField] private int skillType;
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         isBattle = true;
-        castedSkill = 0;
+        //castedSkill = 0;
         cc = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         state = PlayerState.Idle;
@@ -173,7 +173,10 @@ public class Player : MonoBehaviour
         state = PlayerState.CastEnd;
         anim.SetTrigger("Attack");
 
-        if (skillID % 1000 == 3) { castedSkill = 0; }
+        if (skillID % 1000 == 3) 
+        { 
+            //castedSkill = 0; 
+        }
         StartCoroutine(CastEnd());
     }
 

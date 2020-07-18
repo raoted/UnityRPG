@@ -2,32 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyStatus : MonoBehaviour
+public class EnemyStatus : MonoBehaviour
 {
-    public float maxHP; 
-    private float hp;
-    public float moveSpeed;
-    public float attackRate;
-    public float damage;
-    public int attackPattern;
-
+    private float maxHP;
+    //maxHP getter, setter 선언
     public float MaxHP
     {
         get { return maxHP; }
-        set 
+        set
         {
             maxHP = value;
-            SetHP = maxHP;
+            
+            if(hp > maxHP) { hp = maxHP; }
         }
     }
-    public float SetHP
-    {
-        set { hp = maxHP; }
-    }
+
+    private float hp;
+    //hp getter, setter 선언
     public float HP
     {
         get { return hp; }
         set { hp = value; }
     }
 
+    private float moveSpeed;
+    //moveSpeed getter, setter 선언
+    public float MoveSpeed
+    {
+        get { return moveSpeed; }
+        set { moveSpeed = value; }
+    }
+
+    private float attackRate;
+    //attackRate getter, setter 선언
+    public float AttackRate
+    {
+        get { return attackRate; }
+        set { attackRate = value; }
+    }
+
+    private float damage;
+    //Damage getter, setter 선언
+    public float Damage
+    {
+        get { return damage; }
+        set { damage = value; }
+    }
+
+    private int attackPattern;
+    //AttackPattern getter, setter 선언
+    public int AttackPattern
+    {
+        get { return attackPattern; }
+        set { attackPattern = value; }
+    }
 }
